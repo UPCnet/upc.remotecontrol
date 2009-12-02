@@ -5,10 +5,4 @@
 
     <include package=".browser" />
 
-	<!-- Remote Control Utility -->
-	<utility
- 		provides=".interfaces.IRemoteControlUtility"
- 		factory=".utility.RemoteControlUtility"
- 		/>
-
 </configure>
