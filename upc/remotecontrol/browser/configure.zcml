@@ -1,0 +1,30 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"    
+    i18n_domain="upc.remotemanager">
+
+    <!-- List Products View -->
+    <browser:page
+        for="Products.CMFCore.interfaces.ISiteRoot"
+        name="listProducts"
+        class=".remotecontrol.ListProductsView"
+        permission="cmf.ManagePortal"
+        />
+
+    <!-- Install Product View -->
+    <browser:page
+        for="Products.CMFCore.interfaces.ISiteRoot"
+        name="installProduct"
+        class=".remotecontrol.InstallProductView"
+        permission="cmf.ManagePortal"
+        />
+
+    <!-- Uninstall Product View -->
+    <browser:page
+        for="Products.CMFCore.interfaces.ISiteRoot"
+        name="uninstallProduct"
+        class=".remotecontrol.UninstallProductView"
+        permission="cmf.ManagePortal"
+        />
+
+</configure>

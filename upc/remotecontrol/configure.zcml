@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="upc.remotecontrol">
+
+    <include package=".browser" />
+
+	<!-- Remote Control Utility -->
+	<utility
+ 		provides=".interfaces.IRemoteControlUtility"
+ 		factory=".utility.RemoteControlUtility"
+ 		/>
+
+</configure>
