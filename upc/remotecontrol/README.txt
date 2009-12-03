@@ -2,16 +2,21 @@
 Connect to the Plone Instance:: 
 
 >>> from xmlrpclib import ServerProxy
->>> client = ServerProxy('http://admin:admin@localhost:8080/instance1')
+>>> client = ServerProxy('http://admin:admin@localhost:8080/')
 
-List all installed products::
+List all Plone instances inside the Zope instance::
 
->>> client.listProducts()
+>>> client.listInstances()
+['instance1', 'instance2', 'instance3']
+
+Install a product in all instances::
+
+>>> print client.installProduct()
 True
 
->>> client.installProduct()
+>>> print client.uninstallProduct()
 True
 
->>> client.uninstallProduct()
+>>> print client.reinstallProduct()
 True
 

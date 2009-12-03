@@ -3,25 +3,33 @@
     xmlns:browser="http://namespaces.zope.org/browser"    
     i18n_domain="upc.remotemanager">
 
-    <!-- List Products View -->
+	<!-- List Instances -->
     <browser:page
-        for="Products.CMFCore.interfaces.ISiteRoot"
-        name="listProducts"
-        class=".remotecontrol.ListProductsView"
+        for="OFS.interfaces.IApplication"
+        name="listInstances"
+        class=".remotecontrol.ListInstancesView"
         permission="cmf.ManagePortal"
         />
 
-    <!-- Install Product View -->
+    <!-- Install Product -->
     <browser:page
-        for="Products.CMFCore.interfaces.ISiteRoot"
+        for="OFS.interfaces.IApplication"
         name="installProduct"
         class=".remotecontrol.InstallProductView"
         permission="cmf.ManagePortal"
         />
 
+    <!-- Reinstall Product View -->
+    <browser:page
+        for="OFS.interfaces.IApplication"
+        name="reinstallProduct"
+        class=".remotecontrol.ReinstallProductView"
+        permission="cmf.ManagePortal"
+        />
+        
     <!-- Uninstall Product View -->
     <browser:page
-        for="Products.CMFCore.interfaces.ISiteRoot"
+        for="OFS.interfaces.IApplication"
         name="uninstallProduct"
         class=".remotecontrol.UninstallProductView"
         permission="cmf.ManagePortal"
