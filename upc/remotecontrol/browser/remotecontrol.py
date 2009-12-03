@@ -5,6 +5,9 @@ from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 
 from Acquisition import *
 
+from Products.GenericSetup import profile_registry, EXTENSION
+from Products.CMFCore.utils import getToolByName
+
 class ListInstancesView(BrowserView):
     
     def __call__(self):
@@ -40,7 +43,6 @@ class ReinstallProductView(BrowserView):
     
     def __call__(self, product):
         context = aq_inner(self.context)
-        success = []
         for plonesite in context.values():
             if IPloneSiteRoot.providedBy(plonesite):
                 qi = getattr(plonesite, 'portal_quickinstaller', None)
@@ -51,9 +53,21 @@ class UninstallProductView(BrowserView):
     
     def __call__(self, product):
         context = aq_inner(self.context)
-        success = []
         for plonesite in context.values():
             if IPloneSiteRoot.providedBy(plonesite):
                 qi = getattr(plonesite, 'portal_quickinstaller', None)
                 qi.uninstallProducts(products=[product])
         return "Successfully uninstalled %s on all instances." % (product)
+
+
+class ApplyImportStepView(BrowserView):
+    
+    def __call__(self, product, step_id):
+        context = aq_inner(self.context)
+        for plonesite in context.values():
+            if IPloneSiteRoot.providedBy(plonesite):
+                setup = getattr(plonesite, 'portal_setup', None)                
+                profile_id = 'profile-%s:default' % product
+                setup.runImportStepFromProfile(profile_id, step_id,
+                                               run_dependencies=True, purge_old=None)
+        return "Successfully applied import step %s to profile %s." % (step_id, product)

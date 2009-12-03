@@ -35,4 +35,12 @@
         permission="cmf.ManagePortal"
         />
 
+    <!-- Apply Import Step View -->
+    <browser:page
+        for="OFS.interfaces.IApplication"
+        name="applyImportStep"
+        class=".remotecontrol.ApplyImportStepView"
+        permission="cmf.ManagePortal"
+        />
+
 </configure>
