@@ -11,42 +11,43 @@ class ListInstancesView(BrowserView):
         context = aq_inner(self.context)
         out = []
         for item in context.values():
-             if IPloneSiteRoot.providedBy(item):
-	         out.append(item.id)
-                 print item.id
+            if IPloneSiteRoot.providedBy(item):
+                out.append(item.id)
         return out
    
 
 class InstallProductView(BrowserView):
     
-    def __call__(self):
-	context = aq_inner(self.context)
-        product = 'collective.fancyzoomview'
+    def __call__(self, product):
+        context = aq_inner(self.context)
         for plonesite in context.values():
-             if IPloneSiteRoot.providedBy(plonesite):
-		qi = getattr(plonesite, 'portal_quickinstaller', None)
+            if IPloneSiteRoot.providedBy(plonesite):
+                qi = getattr(plonesite, 'portal_quickinstaller', None)
                 result = qi.installProducts(products=[product], forceProfile=True, omitSnapshots=True)
-        	print "%s: installProduct(%s)" % (plonesite, product)
-                print result
+                print "%s: installProduct(%s)" % (plonesite.id, product)
+                #print result
+                # XXX: Todo: What if the installation fails?
         return True
 
 
 class ReinstallProductView(BrowserView):
     
-    def __call__(self, products):
-	context = aq_inner(self.context)
-        print "ReinstallProductView(%s)" % products
-        return True
-        
+    def __call__(self, product):
+        context = aq_inner(self.context)
+        for plonesite in context.values():
+            if IPloneSiteRoot.providedBy(plonesite):
+                qi = getattr(plonesite, 'portal_quickinstaller', None)
+                qi.reinstallProducts(products=[product])
+                print "%s: reinstallProduct(%s)" % (plonesite.id, product)
+        return True        
 
 class UninstallProductView(BrowserView):
     
-    def __call__(self):
-	context = aq_inner(self.context)
-        product = 'collective.fancyzoomview'
+    def __call__(self, product):
+        context = aq_inner(self.context)
         for plonesite in context.values():
-             if IPloneSiteRoot.providedBy(plonesite):
-		qi = getattr(plonesite, 'portal_quickinstaller', None)
+            if IPloneSiteRoot.providedBy(plonesite):
+                qi = getattr(plonesite, 'portal_quickinstaller', None)
                 qi.uninstallProducts(products=[product])
-		print "%s: installProduct(%s)" % (plonesite, product)
+                print "%s: uninstallProduct(%s)" % (plonesite.id, product)
         return True

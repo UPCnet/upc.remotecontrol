@@ -1,3 +1,6 @@
+=================
+upc.remotecontrol
+=================
 
 Connect to the Plone Instance:: 
 
@@ -11,12 +14,16 @@ List all Plone instances inside the Zope instance::
 
 Install a product in all instances::
 
->>> print client.installProduct()
+>>> client.installProduct("collective.fancyzoomview")
 True
 
->>> print client.uninstallProduct()
+Uninstall a product in all instances::
+
+>>> client.uninstallProduct("collective.fancyzoomview")
 True
 
->>> print client.reinstallProduct()
+Reinstall a product in all instances::
+
+>>> print client.reinstallProduct("collective.fancyzoomview")
 True
 
