@@ -15,15 +15,15 @@ List all Plone instances inside the Zope instance::
 Install a product in all instances::
 
 >>> client.installProduct("collective.fancyzoomview")
-True
+Successfully installed collective.fancyzoomview on all instances.
 
 Uninstall a product in all instances::
 
 >>> client.uninstallProduct("collective.fancyzoomview")
-True
+Successfully uninstalled collective.fancyzoomview on all instances.
 
 Reinstall a product in all instances::
 
 >>> print client.reinstallProduct("collective.fancyzoomview")
-True
+Successfully reinstalled collective.fancyzoomview on all instances.
 

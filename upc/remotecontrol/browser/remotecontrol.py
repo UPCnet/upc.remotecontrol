@@ -20,34 +20,40 @@ class InstallProductView(BrowserView):
     
     def __call__(self, product):
         context = aq_inner(self.context)
+        success = []
+        fail = []
         for plonesite in context.values():
             if IPloneSiteRoot.providedBy(plonesite):
                 qi = getattr(plonesite, 'portal_quickinstaller', None)
                 result = qi.installProducts(products=[product], forceProfile=True, omitSnapshots=True)
-                print "%s: installProduct(%s)" % (plonesite.id, product)
-                #print result
-                # XXX: Todo: What if the installation fails?
-        return True
+                if "%s:ok" % product in result:
+                    success.append(plonesite.id)
+                else:
+                    fail.append(plonesite.id)
+        if fail:
+            return "Installing %s failed on instances (%s)" % (product, fail)
+        else:
+            return "Successfully installed %s on all instances." % (product)
 
 
 class ReinstallProductView(BrowserView):
     
     def __call__(self, product):
         context = aq_inner(self.context)
+        success = []
         for plonesite in context.values():
             if IPloneSiteRoot.providedBy(plonesite):
                 qi = getattr(plonesite, 'portal_quickinstaller', None)
                 qi.reinstallProducts(products=[product])
-                print "%s: reinstallProduct(%s)" % (plonesite.id, product)
-        return True        
-
+        return "Successfully reinstalled %s on all instances." % (product)
+        
 class UninstallProductView(BrowserView):
     
     def __call__(self, product):
         context = aq_inner(self.context)
+        success = []
         for plonesite in context.values():
             if IPloneSiteRoot.providedBy(plonesite):
                 qi = getattr(plonesite, 'portal_quickinstaller', None)
                 qi.uninstallProducts(products=[product])
-                print "%s: uninstallProduct(%s)" % (plonesite.id, product)
-        return True
+        return "Successfully uninstalled %s on all instances." % (product)
