@@ -5,7 +5,7 @@ version = '1.0a1'
 
 setup(name='upc.remotecontrol',
       version=version,
-      description="",
+      description="upc.remotecontrol is a tool for managing a set of Plone instances through XML-RPC calls.",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
