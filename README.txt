@@ -3,6 +3,18 @@ Introduction
 
 upc.remotecontrol is a tool for managing a set of Plone instances through XML-RPC calls.
 
+Buildout Installation
+=====================
+
+To install upc.remotecontrol, add the following code to your buildout.cfg::
+
+    [instance]
+    ...
+    eggs =
+        ...
+        upc.remotecontrol
+
+
 Usage
 =====
 
