@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '1.0a1'
 
 setup(name='upc.remotecontrol',
       version=version,
@@ -16,7 +16,7 @@ setup(name='upc.remotecontrol',
       keywords='',
       author='Timo Stollenwerk',
       author_email='timo@zmag.de',
-      url='http://svn.plone.org/svn/plone/plone.example',
+      url='',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['upc'],
@@ -25,7 +25,6 @@ setup(name='upc.remotecontrol',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
-          'wsapi4plone.core',
       ],
       entry_points="""
       # -*- Entry points: -*-
