@@ -28,7 +28,7 @@ class InstallProductView(BrowserView):
         for plonesite in context.values():
             if IPloneSiteRoot.providedBy(plonesite):
                 qi = getattr(plonesite, 'portal_quickinstaller', None)
-                result = qi.installProducts(products=[product], forceProfile=True, omitSnapshots=True)
+                result = qi.installProducts(products=[product])
                 if "%s:ok" % product in result:
                     success.append(plonesite.id)
                 else:
