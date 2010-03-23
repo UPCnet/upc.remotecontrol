@@ -31,3 +31,8 @@ Apply specific Generic Setup import step::
 
 >>> client.applyImportStep("collective.fancyzoomview", "catalog")
 'Successfully applied import step catalog to profile collective.fancyzoomview.'
+
+Apply specific Generic Setup import step from a given profile (different than 'default')::
+
+>>> client.applyMigrationProfile('upc.genwebupc', 'v321tov322', 'propertiestool')
+'Successfully applied import step propertiestool to profile upc.genwebupc from migration profile v321tov322.'

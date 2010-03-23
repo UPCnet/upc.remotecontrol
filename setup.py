@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0a1'
+version = '1.0a2'
 
 setup(name='upc.remotecontrol',
       version=version,
@@ -32,6 +32,4 @@ setup(name='upc.remotecontrol',
       [z3c.autoinclude.plugin]
       target = plone
       """,
-      setup_requires=["PasteScript"],
-      paster_plugins = ["ZopeSkel"],
       )
