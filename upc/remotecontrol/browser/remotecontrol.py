@@ -4,6 +4,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 from OFS.interfaces import IFolder
 
+import os
 from Acquisition import *
 
 from Products.GenericSetup import profile_registry, EXTENSION
@@ -89,3 +90,16 @@ class ApplyMigrationProfileView(BrowserView):
             setup.runImportStepFromProfile(profile_id, step_id,
                                            run_dependencies=True, purge_old=None)
         return "Successfully applied import step %s to profile %s from migration profile %s." % (step_id, product, migrationVersion)
+
+class reloadi18nCatalogView(BrowserView):
+    
+    def __call__(self, dirproduct):
+        context = aq_inner(self.context)        
+        cp_id = 'TranslationService'
+        import ipdb;ipdb.set_trace()
+        cp = context.Control_Panel
+        if cp_id in cp.objectIds():
+            cp_ts = getattr(cp, cp_id)
+            if os.path.isdir(os.path.join(dirproduct, 'i18n')):
+                cp_ts._load_i18n_dir(os.path.join(dirproduct, 'i18n'))
+        return 'Successfully reloaded i18n from product located at %s' % dirproduct

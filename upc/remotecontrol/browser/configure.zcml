@@ -50,5 +50,12 @@
         class=".remotecontrol.ApplyMigrationProfileView"
         permission="cmf.ManagePortal"
         />
-
+        
+    <!-- Reload i18n catalog View -->
+    <browser:page
+        for="OFS.interfaces.IApplication"
+        name="reloadi18nCatalog"
+        class=".remotecontrol.reloadi18nCatalogView"
+        permission="cmf.ManagePortal"
+        />
 </configure>
