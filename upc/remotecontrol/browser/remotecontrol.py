@@ -22,7 +22,8 @@ def listPloneSites(context):
     return out
 
 class ListInstancesView(BrowserView):
-    
+    """ List all the Plone instances in a Zope instance
+    """
     def __call__(self):
         context = aq_inner(self.context)
         out = []
@@ -70,7 +71,8 @@ class UninstallProductView(BrowserView):
 
 
 class ApplyImportStepView(BrowserView):
-    
+    """ Apply an import step given the product and the name of the step
+    """
     def __call__(self, product, step_id):
         context = aq_inner(self.context)
         for plonesite in listPloneSites(context):
@@ -81,7 +83,8 @@ class ApplyImportStepView(BrowserView):
         return "Successfully applied import step %s to profile %s." % (step_id, product)
 
 class ApplyMigrationProfileView(BrowserView):
-    
+    """ Apply a migration profile given the product, the migration version (name of the profiles folder) and the step id
+    """
     def __call__(self, product, migrationVersion, step_id):
         context = aq_inner(self.context)        
         for plonesite in listPloneSites(context):
@@ -92,7 +95,9 @@ class ApplyMigrationProfileView(BrowserView):
         return "Successfully applied import step %s to profile %s from migration profile %s." % (step_id, product, migrationVersion)
 
 class reloadi18nCatalogView(BrowserView):
-    
+    """ Given the directory name of the product (without the i18n part), reload this catalog in PTS 
+        (you must delete the catalog record for the given product first via ZMI)
+    """
     def __call__(self, dirproduct):
         context = aq_inner(self.context)        
         cp_id = 'TranslationService'
