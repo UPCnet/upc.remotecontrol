@@ -6,6 +6,7 @@ from OFS.interfaces import IFolder
 
 import os
 from Acquisition import *
+from Globals import package_home
 
 from Products.GenericSetup import profile_registry, EXTENSION
 from Products.CMFCore.utils import getToolByName
@@ -98,13 +99,14 @@ class reloadi18nCatalogView(BrowserView):
     """ Given the directory name of the product (without the i18n part), reload this catalog in PTS 
         (you must delete the catalog record for the given product first via ZMI)
     """
-    def __call__(self, dirproduct):
+    def __call__(self, product):
         context = aq_inner(self.context)        
         cp_id = 'TranslationService'
         import ipdb;ipdb.set_trace()
         cp = context.Control_Panel
         if cp_id in cp.objectIds():
             cp_ts = getattr(cp, cp_id)
-            if os.path.isdir(os.path.join(dirproduct, 'i18n')):
-                cp_ts._load_i18n_dir(os.path.join(dirproduct, 'i18n'))
-        return 'Successfully reloaded i18n from product located at %s' % dirproduct
+            prod_path = package_home({'__name__' : product})
+            if os.path.isdir(os.path.join(prod_path, 'i18n')):
+                cp_ts._load_i18n_dir(os.path.join(prod_path, 'i18n'))
+        return 'Successfully reloaded i18n from product located at %s' % os.path.isdir(os.path.join(product, 'i18n'))
