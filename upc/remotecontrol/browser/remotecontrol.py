@@ -94,23 +94,33 @@ class ApplyImportStepView(BrowserView):
     """
     def __call__(self, product, step_id):
         context = aq_inner(self.context)
+        counter = 0
         for plonesite in listPloneSites(context):
-            setup = getattr(plonesite, 'portal_setup', None)                
+            setup = getattr(plonesite, 'portal_setup', None)
             profile_id = 'profile-%s:default' % product
             setup.runImportStepFromProfile(profile_id, step_id,
                                            run_dependencies=True, purge_old=None)
+            transaction.commit()
+            logger.info("||||||||||||||| Successful applied in %s" % plonesite.id)
+            logger.info("||||||||||||||| Plonesite number %s" % str(counter))
+            counter = counter +1
         return "Successfully applied import step %s to profile %s." % (step_id, product)
 
 class ApplyMigrationProfileView(BrowserView):
     """ Apply a migration profile given the product, the migration version (name of the profiles folder) and the step id
     """
     def __call__(self, product, migrationVersion, step_id):
-        context = aq_inner(self.context)        
+        context = aq_inner(self.context)
+        counter = 0     
         for plonesite in listPloneSites(context):
             setup = getattr(plonesite, 'portal_setup', None)                
             profile_id = 'profile-%s:%s' % (product, migrationVersion)
             setup.runImportStepFromProfile(profile_id, step_id,
                                            run_dependencies=True, purge_old=None)
+            transaction.commit()
+            logger.info("||||||||||||||| Successful applied in %s" % plonesite.id)
+            logger.info("||||||||||||||| Plonesite number %s" % str(counter))
+            counter = counter +1
         return "Successfully applied import step %s to profile %s from migration profile %s." % (step_id, product, migrationVersion)
     
 class applyUpgradeView(BrowserView):
