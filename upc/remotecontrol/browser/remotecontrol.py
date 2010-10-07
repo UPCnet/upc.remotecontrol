@@ -12,6 +12,10 @@ from Products.GenericSetup import profile_registry, EXTENSION
 from Products.GenericSetup.upgrade import listUpgradeSteps
 from Products.CMFCore.utils import getToolByName
 
+import logging
+logger = logging.getLogger('upc.remotecontrol')
+
+
 def listPloneSites(context):
     out = []
     for item in context.values():
@@ -45,10 +49,10 @@ class InstallProductView(BrowserView):
             result = qi.installProducts(products=[product])
             if "%s:ok" % product in result:
                 success.append(plonesite.id)
-                print "Successful installed in " % plonesite.id
+                logger.info("Successful installed in " % plonesite.id)
             else:
                 fail.append(plonesite.id)
-                print "Failed to install in " % plonesite.id
+                logger.info("Failed to install in " % plonesite.id)
         if fail:
             return "Installing %s failed on instances (%s)" % (product, fail)
         else:
@@ -60,7 +64,7 @@ class ReinstallProductView(BrowserView):
     def __call__(self, product):
         context = aq_inner(self.context)
         for plonesite in listPloneSites(context):
-            print "Reinstalling product %s in site %s" % (product, plonesite)
+            logger.info("Reinstalling product %s in site %s" % (product, plonesite))
             qi = getattr(plonesite, 'portal_quickinstaller', None)
             qi.reinstallProducts(products=[product])
         return "Successfully reinstalled %s on all instances." % (product)
