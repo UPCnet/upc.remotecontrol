@@ -12,6 +12,7 @@ from Products.GenericSetup import profile_registry, EXTENSION
 from Products.GenericSetup.upgrade import listUpgradeSteps
 from Products.CMFCore.utils import getToolByName
 
+import transaction
 import logging
 logger = logging.getLogger('upc.remotecontrol')
 
@@ -44,12 +45,16 @@ class InstallProductView(BrowserView):
         context = aq_inner(self.context)
         success = []
         fail = []
+        counter = 0
         for plonesite in listPloneSites(context):
             qi = getattr(plonesite, 'portal_quickinstaller', None)
             result = qi.installProducts(products=[product])
             if "%s:ok" % product in result:
                 success.append(plonesite.id)
-                logger.info("Successful installed in %s" % plonesite.id)
+                counter = counter +1
+                transaction.commit()
+                logger.info("||||||||||||||| Successful installed in %s" % plonesite.id)
+                logger.info("||||||||||||||| Plonesite number %s" % str(counter))
             else:
                 fail.append(plonesite.id)
                 logger.info("Failed to install in %s" % plonesite.id)
@@ -63,10 +68,15 @@ class ReinstallProductView(BrowserView):
     
     def __call__(self, product):
         context = aq_inner(self.context)
+        counter = 0
         for plonesite in listPloneSites(context):
             logger.info("Reinstalling product %s in site %s" % (product, plonesite))
             qi = getattr(plonesite, 'portal_quickinstaller', None)
             qi.reinstallProducts(products=[product])
+            counter = counter +1
+            transaction.commit()
+            logger.info("||||||||||||||| Successful installed in %s" % plonesite.id)
+            logger.info("||||||||||||||| Plonesite number %s" % str(counter))
         return "Successfully reinstalled %s on all instances." % (product)
         
 class UninstallProductView(BrowserView):
@@ -104,7 +114,7 @@ class ApplyMigrationProfileView(BrowserView):
         return "Successfully applied import step %s to profile %s from migration profile %s." % (step_id, product, migrationVersion)
     
 class applyUpgradeView(BrowserView):
-    """ Run upgrade steps available from a given version, for a given profile id.
+    """ Run upgrade steps available for a given version and for a given product.
         Usage: sourceversion must have the format ('1','2','1')
     """
     def __call__(self, product, sourceversion):
