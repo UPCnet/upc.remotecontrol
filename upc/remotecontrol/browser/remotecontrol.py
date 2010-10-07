@@ -60,6 +60,7 @@ class ReinstallProductView(BrowserView):
     def __call__(self, product):
         context = aq_inner(self.context)
         for plonesite in listPloneSites(context):
+            print "Reinstalling product %s in site %s" % (product, plonesite)
             qi = getattr(plonesite, 'portal_quickinstaller', None)
             qi.reinstallProducts(products=[product])
         return "Successfully reinstalled %s on all instances." % (product)
@@ -110,10 +111,10 @@ class applyUpgradeView(BrowserView):
             profile_id = '%s:default' % product
             request.form['profile_id'] = profile_id
             steps = listUpgradeSteps(setup, profile_id, tuple(sourceversion))
-#            import pdb; pdb.set_trace()
+            import pdb; pdb.set_trace()
             step_id = steps[0][0]['id']
             request.form['upgrades'] = [step_id]
-            upgrade = tool.manage_doUpgrades()
+            upgrade = setup.manage_doUpgrades()
         return upgrade
 
 class reloadi18nCatalogView(BrowserView):
