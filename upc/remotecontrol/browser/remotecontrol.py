@@ -49,10 +49,10 @@ class InstallProductView(BrowserView):
             result = qi.installProducts(products=[product])
             if "%s:ok" % product in result:
                 success.append(plonesite.id)
-                logger.info("Successful installed in " % plonesite.id)
+                logger.info("Successful installed in %s" % plonesite.id)
             else:
                 fail.append(plonesite.id)
-                logger.info("Failed to install in " % plonesite.id)
+                logger.info("Failed to install in %s" % plonesite.id)
         if fail:
             return "Installing %s failed on instances (%s)" % (product, fail)
         else:
@@ -115,7 +115,7 @@ class applyUpgradeView(BrowserView):
             profile_id = '%s:default' % product
             request.form['profile_id'] = profile_id
             steps = listUpgradeSteps(setup, profile_id, tuple(sourceversion))
-            import pdb; pdb.set_trace()
+            #import pdb; pdb.set_trace()
             step_id = steps[0][0]['id']
             request.form['upgrades'] = [step_id]
             upgrade = setup.manage_doUpgrades()
