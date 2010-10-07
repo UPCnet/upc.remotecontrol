@@ -9,6 +9,7 @@ from Acquisition import *
 from Globals import package_home
 
 from Products.GenericSetup import profile_registry, EXTENSION
+from Products.GenericSetup.upgrade import listUpgradeSteps
 from Products.CMFCore.utils import getToolByName
 
 def listPloneSites(context):
@@ -44,8 +45,10 @@ class InstallProductView(BrowserView):
             result = qi.installProducts(products=[product])
             if "%s:ok" % product in result:
                 success.append(plonesite.id)
+                print "Successful installed in " % plonesite.id
             else:
                 fail.append(plonesite.id)
+                print "Failed to install in " % plonesite.id
         if fail:
             return "Installing %s failed on instances (%s)" % (product, fail)
         else:
@@ -94,6 +97,24 @@ class ApplyMigrationProfileView(BrowserView):
             setup.runImportStepFromProfile(profile_id, step_id,
                                            run_dependencies=True, purge_old=None)
         return "Successfully applied import step %s to profile %s from migration profile %s." % (step_id, product, migrationVersion)
+    
+class applyUpgradeView(BrowserView):
+    """ Run upgrade steps available from a given version, for a given profile id.
+        Usage: sourceversion must have the format ('1','2','1')
+    """
+    def __call__(self, product, sourceversion):
+        context = aq_inner(self.context)
+        request = self.request
+        for plonesite in listPloneSites(context):
+            setup = getattr(plonesite, 'portal_setup', None) 
+            profile_id = '%s:default' % product
+            request.form['profile_id'] = profile_id
+            steps = listUpgradeSteps(setup, profile_id, tuple(sourceversion))
+#            import pdb; pdb.set_trace()
+            step_id = steps[0][0]['id']
+            request.form['upgrades'] = [step_id]
+            upgrade = tool.manage_doUpgrades()
+        return upgrade
 
 class reloadi18nCatalogView(BrowserView):
     """ Given the directory name of the product (without the i18n part), reload this catalog in PTS 

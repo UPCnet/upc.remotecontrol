@@ -43,11 +43,19 @@
         permission="cmf.ManagePortal"
         />
 
-    <!-- Apply Import Step View -->
+    <!-- Apply Migration Profile Step View -->
     <browser:page
         for="OFS.interfaces.IApplication"
         name="applyMigrationProfile"
         class=".remotecontrol.ApplyMigrationProfileView"
+        permission="cmf.ManagePortal"
+        />
+        
+    <!-- Apply Upgrade Profile Step View -->
+    <browser:page
+        for="OFS.interfaces.IApplication"
+        name="applyUpgrade"
+        class=".remotecontrol.applyUpgradeView"
         permission="cmf.ManagePortal"
         />
         
