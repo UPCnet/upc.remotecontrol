@@ -72,7 +72,10 @@ class ReinstallProductView(BrowserView):
         for plonesite in listPloneSites(context):
             logger.info("Reinstalling product %s in site %s" % (product, plonesite))
             qi = getattr(plonesite, 'portal_quickinstaller', None)
-            qi.reinstallProducts(products=[product])
+            try:
+                qi.reinstallProducts(products=[product])
+            except:
+                logger.info("XXXXXXXXXXXXX Failed reinstall in %s" % plonesite.id)
             counter = counter +1
             transaction.commit()
             logger.info("||||||||||||||| Successful installed in %s" % plonesite.id)

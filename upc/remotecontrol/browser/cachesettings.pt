@@ -1,0 +1,10 @@
+<html>
+<body>
+<h1>Aquestes son les dades de cache de totes les instancies:</h1>
+<tal:block repeat="value view/cacheValues">
+    <span tal:content="value">Els valors per cada localitat</span><br /><br />
+</tal:block>
+
+</body>
+
+</html>

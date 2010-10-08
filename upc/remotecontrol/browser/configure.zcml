@@ -66,4 +66,13 @@
         class=".remotecontrol.reloadi18nCatalogView"
         permission="cmf.ManagePortal"
         />
+        
+    <browser:page
+        for="OFS.interfaces.IApplication"
+        name="showCacheInfo"
+        class=".controlviews.showCacheInfo"
+        template="cachesettings.pt"
+        permission="cmf.ManagePortal"
+        />        
+        
 </configure>
