@@ -31,7 +31,6 @@ class showCacheInfo(BrowserView):
     def cacheValues(self):
         context = aq_inner(self.context)
         #import ipdb; ipdb.set_trace()
-        out = []
         for plonesite in listPloneSites(context):
             if getattr(plonesite, "portal_cache_settings", None):
                 cachetool = plonesite.portal_cache_settings
@@ -39,8 +38,7 @@ class showCacheInfo(BrowserView):
                 domains = cachetool.getDomains()
                 policy = cachetool.getPolicy()
                 rules = cachetool.getRules()
-                out.append(plonesite.id +"::: SquidURLS:"+ str(SquidUrls) +", Domains:"+ str(domains) +", Policy:"+ str(policy.id) +", Rules:"+ str(rules.items()) +"\n")
+                yield dict(installed=True, plonesite=plonesite.id, SquidUrls=str(SquidUrls), domains=str(domains), policy=str(policy.id), rules=str(rules.items()))
             else:
                 notinstalled ="Cache setup not installed in %s" % plonesite.id 
-                out.append(notinstalled)
-        return out
+                yield dict(installed=False, notinstalled=notinstalled, plonesite=plonesite.id)

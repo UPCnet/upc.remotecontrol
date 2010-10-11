@@ -1,10 +1,21 @@
 <html>
 <body>
 <h1>Aquestes son les dades de cache de totes les instancies:</h1>
+<table>
 <tal:block repeat="value view/cacheValues">
-    <span tal:content="value">Els valors per cada localitat</span><br /><br />
+<tr tal:condition="value/installed">
+    <td><span tal:content="value/plonesite">plonesite</span><br /><br /></td>
+    <td><span tal:content="value/SquidUrls">Les squidURLs</span><br /><br /></td>
+    <td><span tal:content="value/domains">domains</span><br /><br /></td>
+    <td><span tal:content="value/policy">policy</span><br /><br /></td>
+    <td><span tal:content="value/rules">rules</span><br /><br /></td>
+</tr>
+<tr tal:condition="not:value/installed">
+    <td><span tal:content="value/plonesite">plonesite</span><br /><br /></td>
+    <td><span tal:content="value/notinstalled">plonesite</span><br /><br /></td>
+</tr>
 </tal:block>
-
+</table>
 </body>
 
 </html>
