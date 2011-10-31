@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0a8'
+version = '1.0a9'
 
 setup(name='upc.remotecontrol',
       version=version,
@@ -16,7 +16,7 @@ setup(name='upc.remotecontrol',
       keywords='',
       author='Timo Stollenwerk',
       author_email='timo@zmag.de',
-      url='https://devel.upcnet.es/svn/genwebupc/trunk/upc.remotecontrol',
+      url='http://github.com/UPCnet/upc.remotecontrol',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['upc'],
